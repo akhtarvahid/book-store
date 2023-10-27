@@ -23,7 +23,7 @@ Used - nestjs, graphql, postgres, docker
 
 *Step 6-Create and run docker server to connect postgres
 
-   `docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 7080:5432 -d postgres`
+   `docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 7070:5432 -d postgres`
 
     and add this configuration in app.module
     
