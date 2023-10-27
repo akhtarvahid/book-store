@@ -1,73 +1,64 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Used - nestjs, graphql, postgres, docker
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+* Step 1- Create project using 
+  | nest new project_name
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+* Step 2- Do some cleanup like remove files
+   controller, services, spec files,
+   update app.module.ts
 
-## Description
+* Step 3-create project module 
+  | nest g module project_module_name
+  Adding database by installing some dependencies
+  | npm i @nestjs/graphql graphql@^15 apollo-server-express
+  | npm install --save @nestjs/typeorm typeorm pg
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+*Step 4-create entity and graphql field
+      To add validation, install
+    | npm i --save class-validator class-transformer
 
-## Installation
+*Step 5-configure app module and project module
+   typeorm module feature in project.module.ts
+   typeorm module root in app.module.ts
 
-```bash
-$ npm install
-```
+*Step 6-Create and run docker server to connect postgres
 
-## Running the app
+   `docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 7080:5432 -d postgres`
 
-```bash
-# development
-$ npm run start
+    and add this configuration in app.module
+    
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      port: 7070,
+      username: 'postgres',
+      password: 'password',
+      database: 'postgres',
+      synchronize: true,
+      entities: [ProjectEntity], //add project entity here
+    })
 
-# watch mode
-$ npm run start:dev
+*Step 7-Now create server in postgress with above configuration
+    
+    Screen 1
+   <img width="724" height="300px" alt="Step1" src="https://user-images.githubusercontent.com/16021125/163703391-53cbac9d-1d4a-45dc-a97e-64a5b22ae6a7.png">
 
-# production mode
-$ npm run start:prod
-```
+    Screen 2
+   <img width="501"  height="300px"  alt="Step2" src="https://user-images.githubusercontent.com/16021125/163703403-23c14945-d2a4-4bc7-9d89-2e9fd8d4a1d7.png">
 
-## Test
+    Screen 3 -
+   <img width="502"  height="300px"  alt="Step3" src="https://user-images.githubusercontent.com/16021125/163703417-227af1e6-2cd6-4d36-8b8e-f1fce4f6656f.png">
 
-```bash
-# unit tests
-$ npm run test
+    Screen 4 -
+   <img width="499"  height="300px"  alt="Step4" src="https://user-images.githubusercontent.com/16021125/163703421-ead52a4c-52e2-473f-9fe2-413eb68e33b6.png">
 
-# e2e tests
-$ npm run test:e2e
+*Step 8-To enable graphq playground
+    GraphQLModule.forRoot({ 
+      //autoSchemaFile: true, 
+      // or
+      autoSchemaFile: 'src/project-schema.gql',
+    }),    
 
-# test coverage
-$ npm run test:cov
-```
+*Step 9-Now start creating query and mutation.
+     install uuid to generate unique id.
+     | npm install uuid
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
