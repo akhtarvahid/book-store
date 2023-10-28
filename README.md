@@ -14,7 +14,8 @@ Used - nestjs, graphql, postgres, docker
 >| nest g module project_module_name
   
   Adding database by installing some dependencies
->npm i @nestjs/graphql graphql@^15 apollo-server-express
+
+> npm i @nestjs/graphql @nestjs/apollo @apollo/server graphql
 
 >npm install --save @nestjs/typeorm typeorm pg
 
