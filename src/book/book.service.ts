@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookEntity } from './book.entity';
@@ -16,7 +16,9 @@ export class BookService {
   }
   async getFilteredBooks(text: string): Promise<any> {
     const books = await this.bookRepository.find();
-    const filteredBooks = books.filter(book => book.book_title.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
+    const filteredBooks = books.filter((book) =>
+      book.book_title.toLocaleLowerCase().includes(text.toLocaleLowerCase()),
+    );
     console.log(filteredBooks);
     return filteredBooks;
   }
@@ -24,13 +26,11 @@ export class BookService {
     return this.bookRepository.findOneBy({ id });
   }
 
-  async createBook(
-    createBookInput: CreateBookInput,
-  ): Promise<BookEntity> {
+  async createBook(createBookInput: CreateBookInput): Promise<BookEntity> {
     const book = this.bookRepository.create({
       id: uuid(),
       ...createBookInput,
     });
-      return this.bookRepository.save(book);
+    return this.bookRepository.save(book);
   }
 }
